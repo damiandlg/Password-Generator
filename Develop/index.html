@@ -19,27 +19,27 @@
           <div class="modal-body">
 
             <!-- Range -->
-            <label for="customRange1" class="form-label">Password Length</label>
-            <input type="range" class="form-range" id="customRange1">
+            <label for="customRange1"  id= "rangeLabel" class="form-label">Password Length</label>
+            <input type="range" min="8" max="128"class="form-range" id="customRange1">
 
             <!-- Switchs -->
             <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+              <input class="form-check-input" id="switch1" type="checkbox" role="switch" id="flexSwitchCheckDefault">
               <label class="form-check-label" for="flexSwitchCheckDefault">Lowercase</label>
             </div>
 
             <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+              <input class="form-check-input" id="switch2" type="checkbox" role="switch" id="flexSwitchCheckDefault">
               <label class="form-check-label" for="flexSwitchCheckDefault">Uppercase</label>
             </div>
 
             <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+              <input class="form-check-input" id="switch3" type="checkbox" role="switch" id="flexSwitchCheckDefault">
               <label class="form-check-label" for="flexSwitchCheckDefault">Numeric</label>
             </div>
-            
+
             <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+              <input class="form-check-input" id="switch4" type="checkbox" role="switch" id="flexSwitchCheckDefault">
               <label class="form-check-label" for="flexSwitchCheckDefault">Special Characters</label>
             </div>
           </div>
@@ -47,7 +47,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary">Generate Password</button>
+            <button id="generate" type="button" data-bs-dismiss="modal" class="btn btn-primary">Generate Password</button>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
           ></textarea>
         </div>
         <div class="card-footer">
-          <button id="generate" type="button" data-target="#modal-input" data-toggle="modal" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <button type="button" data-target="#modal-input" data-toggle="modal" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Generate Password
           </button>
         </div>
