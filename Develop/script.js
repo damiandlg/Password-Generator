@@ -113,36 +113,110 @@ function writePassword() {
 
 }
 /**
- * Generate password algo
- * 1. Grab data from appstate
- * 2. Randomly generate a string based on password legth
- * 3. If password require lowercase ensure at least one character with lowercase
- * 4. if password requires uppercase make sure at least one character with uppercase
- * 5. If pass requires numeric character ensure at least 1 character numeric
- * 6.If pass requires special character ensure at least 1 character with special 
+ * Generate Password Algorithm
+ * 1. Grab our data from out app state
+ * 2. randomly generate a string based on password length
+ * 3. if password requires lowercase ensure at least one character is lower case
+ * 4. if password requires uppercase ensure at least one character is upper case
+ * 5. if password requires numeric character ensure at least one character is numeric
+ * 6. if password requires special character ensure at least one character is special
  */
-function generatePassword(){
-  let lowerCaseAlphabet = 'abcdefghijklmnopqrstuvwxyz'
-  let upperCaseAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+ function generatePassword() {
+  let lowercaseAlphabet = 'abcdefghijklmnopqrstuvwxyz'
+  let uppercaseAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
   let numbers = '0123456789'
   let specialCharacters = `!"#$%&'()*+,-./:;<=>?@[\]^_|~`
 
   //1. 
   let passwordLength = appState.passwordLength
-  let lowercase = appState.lowercase
-  let uppercase = appState.uppercase
-  let numeric = appState.numeric
-  let specialCharacter = appState.specialCharacter
+  let lowercase = appState.types.lowercase
+  let uppercase = appState.types.uppercase
+  let numeric = appState.types.numeric
+  let specialCharacter = appState.types.specialCharacter
+
+  //Requirements
+  var requirements = 0
+  var characterLists = []
+  if (lowercase) {
+    requirements += 1
+    characterLists.push(lowercaseAlphabet)
+  }
+
+  if (uppercase) {
+    requirements += 1
+    characterLists.push(uppercaseAlphabet)
+  }
+
+  if (numeric) {
+    requirements += 1
+    characterLists.push(numbers)
+  }
+
+  if (specialCharacter) {
+    requirements += 1
+    characterLists.push(specialCharacters)
+  }
 
   var password = ""
+
+  //Check Flags
+  var passed = 0
+  var hasLowercase = false
+  var hasUppercase = false
+  var hasNumeric = false
+  var hasSpecialCharacter = false
+
   //2.
-for (var i = 0; i < passwordLength; i++) {
-  let randomNumber = Math.floor(Math.random() * lowerCaseAlphabet.length)
-  password += lowerCaseAlphabet[randomNumber]
-  console.log(lowerCaseAlphabet[randomNumber])
+  for(var i = 0; i < passwordLength; i++) {
+
+    if (passed != requirements) {
+
+      if (lowercase && !hasLowercase) {
+
+        let randomNumber = Math.floor(Math.random() * lowercaseAlphabet.length)
+        password += lowercaseAlphabet[randomNumber]
+        hasLowercase = true
+        passed += 1 
+
+      } else if (uppercase && !hasUppercase) {
+
+        let randomNumber = Math.floor(Math.random() * uppercaseAlphabet.length)
+        password += uppercaseAlphabet[randomNumber]
+        hasUppercase = true
+        passed += 1
+
+      } else if (numeric && !hasNumeric) {
+
+        let randomNumber = Math.floor(Math.random() * numbers.length)
+        password += numbers[randomNumber]
+        hasNumeric = true
+        passed += 1
+
+      } else if (specialCharacter && !hasSpecialCharacter) {
+
+        let randomNumber = Math.floor(Math.random() * specialCharacters.length)
+        password += specialCharacters[randomNumber]
+        hasSpecialCharacter = true
+        passed += 1
+
+      }
+
+    } else {
+      password = generateRandomPasswordFromList(password, characterLists)
+    }
+  }
+
+  return password
 }
 
-
+function generateRandomPasswordFromList(password, list) {
+  console.log(`List: ${list}`)
+  let randomIndex = Math.floor(Math.random() * list.length)
+  let randomList = list[randomIndex]
+  let randomNumber = Math.floor(Math.random() * randomList.length)
+  password += randomList[randomNumber]
+  console.log(`Random Index: ${randomIndex} - Random List: ${randomList} - Random Number: ${randomNumber} - Random Character: ${randomList[randomNumber]}`)
   return password
 }
 
